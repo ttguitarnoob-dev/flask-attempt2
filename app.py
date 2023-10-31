@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, jsonify
 import psycopg2
 from flask_cors import CORS
+
 
 app = Flask(__name__)
 CORS(app)
@@ -24,7 +25,11 @@ def index():
     bookass = cur.fetchall()
     cur.close()
     conn.close()
-    return bookass
+    json_data = []
+    for i in bookass:
+        json_data.append({"id": i[0], "title": i[1], "author": i[2], "pages": i[3], "review": i[4], "dateAdded": i[5]})
+        print('smell', json_data)
+    return jsonify(json_data)
 
 
 
