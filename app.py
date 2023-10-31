@@ -21,15 +21,15 @@ def get_db_connection():
 def index():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('SELECT * FROM smellass;')
+    cur.execute('SELECT json_agg(smellass) FROM smellass;')
     bookass = cur.fetchall()
     cur.close()
     conn.close()
     json_data = []
-    for i in bookass:
-        json_data.append({"id": i[0], "title": i[1], "author": i[2], "pages": i[3], "review": i[4], "dateAdded": i[5]})
-        print('smell', json_data)
-    return jsonify(json_data)
+    # for i in bookass:
+    #     json_data.append({"id": i[0], "title": i[1], "author": i[2], "pages": i[3], "review": i[4], "dateAdded": i[5]})
+    #     print('smell', json_data)
+    return jsonify(bookass)
 
 
 
